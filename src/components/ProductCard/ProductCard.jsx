@@ -3,7 +3,7 @@ import { PiShoppingCartThin } from "react-icons/pi";
 import { useCart } from "../../context/CartContext";
 
 const ProductsCard = ({ product }) => {
-	// const { cart, cartDispatch } = useCart();
+	const { cart, cartDispatch } = useCart();
 	console.log(cart);
 	
 	const onCartClick = (product)=>{
