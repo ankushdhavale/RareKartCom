@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
-import { getAllProducts, getCategories } from "../dataApi/getAllProducts";
+import { getAllProducts, getCategories } from "../utils/getAllProducts";
 import ProductCard from "../components/ProductCard/ProductCard";
+import { getFilterByCategory } from "../utils/getFilterByCategory";
 const Home = () => {
-	const [products, setProducts] = useState();
-	const [categories, setCategories] = useState();
-	console.log("hello", categories);
+	const [products, setProducts] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [selectedCategory, setSelectedCategory] = useState("All");
+	console.log("hello", products);
 
 	useEffect(() => {
 		(async () => {
@@ -21,12 +23,13 @@ const Home = () => {
 
 
 	const onCategoryClick = (category) => {
-		const filterByCategory = products?.length > 0 && products?.filter(cate=>cate?.category?.name.toLowerCase()===category.toLowerCase())
-		setProducts(filterByCategory);
-		console.log(products);
-		
+		setSelectedCategory(category);
 	}
 
+	useEffect(() => {
+		const categoryFilter = getFilterByCategory(products, selectedCategory);
+		setProducts(categoryFilter);
+	},[selectedCategory])
 	return (
 		<>
 			<div className="flex gap-5 justify-center my-3">
